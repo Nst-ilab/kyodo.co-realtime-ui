@@ -8,7 +8,7 @@ import 'mdi/css/materialdesignicons.min.css'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import App from './App'
 import router from './router'
-
+ 
 /**
  * メイン処理
  * ここでは環境の設定をしているだけ
