@@ -4,6 +4,7 @@ import Loading from '@/components/loading/Loading'
 import Login from '@/components/login/Login'
 import Home from '@/components/home/Home'
 import SignUp from '@/components/signup/SignUp'
+import ModUser from '@/components/moduser/ModUser'
 
 /**
  *  Vue-Routerのロード
@@ -34,6 +35,11 @@ export default new Router({
       path: '/signup',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: '/moduser',
+      name: 'ModUser',
+      component: ModUser
     }
   ]
 })

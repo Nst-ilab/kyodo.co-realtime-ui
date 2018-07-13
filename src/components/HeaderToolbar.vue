@@ -8,6 +8,11 @@
           <v-icon>mdi-account-outline</v-icon>{{logonUser.name}}
         </v-btn>
         <v-list>
+          <v-list-tile  @click="$router.replace('/moduser')">
+            <v-list-tile-content>
+              <v-list-tile-title><v-icon>settings</v-icon>UserSetting</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
           <v-list-tile  @click="onLogoutClick">
             <v-list-tile-content>
               <v-list-tile-title><v-icon>mdi-logout</v-icon>Logout</v-list-tile-title>

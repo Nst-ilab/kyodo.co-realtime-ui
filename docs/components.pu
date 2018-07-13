@@ -100,11 +100,9 @@ package components{
    package moduser{
        class ModUser<<(C,lightgreen) Component>>{
          @prop bus: VueInstance
-         @state userid: String
          @state username: String
          @state mobile: String
          @state password: String
-         @state valid: Boolean
          @state errorMessage: String
          ---
          + onModUserClick(): void
