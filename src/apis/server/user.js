@@ -45,6 +45,8 @@ class UserAPI {
     this.bus.$on(USER.TRY_SIGNUP, newUser => this.signup(newUser))
     // ユーザ削除要求イベントのハンドリング
     this.bus.$on(USER.TRY_DELETE, () => this.delete())
+    // ユーザ更新要求イベントのハンドリング
+    this.bus.$on(USER.TRY_MODUSER, modifiedUser => this.moduser(modifiedUser))
 
     // javascriptではコンストラクタのoverloadができないため
     // パラメータの有無で初期化の方針を判断する
@@ -133,6 +135,24 @@ class UserAPI {
       }
     }).catch(() => {
       this.bus.$emit(USER.DELETE_FAILURE)
+    })
+  }
+  
+  /**
+   * ユーザ更新処理
+   */
+  moduser (modifiedUser) {
+    console.log(modifiedUser)
+    axios.put(process.env.ENDPOINT_BASE_URL + '/user/' + this.currentUser.userId, {userId: this.currentUser.userId, name: modifiedUser.name, mobile: modifiedUser.mobile, password: modifiedUser.password}, {
+      headers: {
+        Authorization: 'Bearer ' + this.currentUser.token
+      }
+    }).then(response => {
+      if (response.status === 200) {
+        this.bus.$emit(USER.MODUSER_SUCCESS)
+      }
+    }).catch(() => {
+      this.bus.$emit(USER.MODUSER_FAILURE)
     })
   }
 }
