@@ -30,6 +30,7 @@ package components{
       ---
       + onLogoutClick(): void
    }
+
    package home{
       class Home<<(C,lightgreen) Component>>{
         - @prop bus: VueInstance
@@ -96,6 +97,19 @@ package components{
          + onSignUpClick(): void
       }
    }
+   package moduser{
+       class ModUser<<(C,lightgreen) Component>>{
+         @prop bus: VueInstance
+         @state userid: String
+         @state username: String
+         @state mobile: String
+         @state password: String
+         @state valid: Boolean
+         @state errorMessage: String
+         ---
+         + onModUserClick(): void
+      }
+   }
 }
 
 package apis{
@@ -142,6 +156,7 @@ package apis{
         + login(id: String, pass: String): void
         + logout()
         + signup(newUser: Object): void
+        + moduser(newUser: Object): void
       }
       class PositionAPI<<(A,pink) API>>{
         - bus: VueInstance
@@ -166,6 +181,9 @@ package events{
       TRY_SIGNUP
       SIGNUP_SUCCESS
       SIGNUP_FAILURE
+      TRY_MODUSER
+      MODUSER_SUCCESS
+      MODUSER_FAILURE
    }
    enum USERSETTING{
      CHANGED
@@ -206,6 +224,7 @@ App .down. EventBus
 Router .down.> Loading
 Router .down.> Login
 Router .down.> SignUp
+Router .down.> ModUser
 Router .down.> Home
 
 Home .down.> MyLocation
