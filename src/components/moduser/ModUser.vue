@@ -10,7 +10,7 @@
             id="username"
             name="username"
             label="Name"
-            v-model=currentUser.name
+            v-model="username"
             :rules="usernameRules"
           ></v-text-field>
         </v-flex>
@@ -21,7 +21,7 @@
             id="mobile"
             name="mobile"
             label="携帯電話番号"
-            v-model=currentUser.mobile
+            v-model="mobile"
             :rules="mobileRules"
           ></v-text-field>
         </v-flex>
@@ -33,7 +33,7 @@
             name="password"
             label="password"
             :type= "passwordType"
-            v-model=currentUser.password
+            v-model="password"
             :rules="passwordRules"
           ></v-text-field>
         </v-flex>
@@ -117,7 +117,7 @@ export default{
       passwordConfirm: '',
       passwordConfirmRules: [
         v => !!v || 'password(confirm)は必須です',
-        v => v === this.currentUser.password || 'passwordとpassword(confirm)が一致しません'
+        v => v === this.password || 'passwordとpassword(confirm)が一致しません'
       ],
       valid: false,
       errorMessage: '',
@@ -125,10 +125,9 @@ export default{
     }
   },
   created: function () {
-    // サインアップ失敗イベントのハンドリング
-    this.bus.$on(USER.SIGNUP_FAILURE, () => {
-      this.errorMessage = '登録に失敗しました。IDが重複しています。'
-    })
+    this.username = this.logonUser.name || ''
+    this.mobile = this.logonUser.mobile || ''
+    this.password = this.logonUser.password || ''
   },
   methods: {
     /**
@@ -137,10 +136,10 @@ export default{
     onModUserClick: function () {
       if (this.valid) {
         this.bus.$emit(USER.TRY_MODUSER, {
-          userId: this.currentUser.userid,
-          name: this.currentUser.name,
-          password: this.currentUser.password,
-          mobile: this.currentUser.mobile
+          userId: this.logonUser.userid,
+          name: this.username,
+          password: this.password,
+          mobile: this.mobile
         })
       }
     },
@@ -162,19 +161,6 @@ export default{
       }else { 
         return "mdi-eye" 
       }
-    },
-    /**
-     * 現在のユーザー情報の前処理
-     */
-    currentUser: function () {
-      const currentUser = {
-        userId: this.logonUser.userId,
-        name: this.logonUser.name,
-        mobile: this.logonUser.mobile,
-        password: this.logonUser.password
-      }
-      return currentUser
-
     }
   }
 }
